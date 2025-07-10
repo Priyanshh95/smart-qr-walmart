@@ -2,21 +2,27 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleSignIn = () => {
-    // Placeholder: Add authentication logic here
-    router.replace("/(tabs)/home");
+  const handleSignIn = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.replace("/(tabs)/home");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
     <SafeAreaView className="bg-green-900 flex-1">
       <View className="flex-1 justify-center items-center px-4">
-        <Image source={require("../assets/images/logo.png")} className="w-20 h-20 mt-2 mb-2" />
+        <Image source={require("../../assets/images/logo.png")} className="w-20 h-20 mt-2 mb-2" />
         <Text className="text-white text-xl font-bold mb-4 text-center" style={{textShadowColor: '#000', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 2}}>NutriTrace</Text>
         <View
           className="rounded-2xl shadow p-6 w-full max-w-md"
