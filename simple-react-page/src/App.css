@@ -1,0 +1,117 @@
+:root {
+  --primary: #1976d2;
+  --success: #388e3c;
+  --danger: #d32f2f;
+  --border-radius: 10px;
+  --card-bg: #fff;
+  --input-bg: #f5f7fa;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+body {
+  background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+}
+
+.card {
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  max-width: 400px;
+  margin: 4rem auto;
+}
+
+h2, h3 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+form input[type="text"],
+form input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #dbeafe;
+  border-radius: var(--border-radius);
+  background: var(--input-bg);
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+button[type="submit"] {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+
+button[type="submit"]:hover {
+  background: #1251a3;
+}
+
+button.success {
+  background: var(--success);
+}
+button.success:hover {
+  background: #256029;
+}
+
+button.danger {
+  background: var(--danger);
+}
+button.danger:hover {
+  background: #a31515;
+}
+
+.link {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.98rem;
+  transition: color 0.2s;
+}
+.link:hover {
+  color: #0d3c6e;
+  text-decoration: underline;
+}
+
+.admin-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+.admin-list li {
+  margin-bottom: 1rem;
+}
+
+.note {
+  background: #e3f2fd;
+  border-left: 4px solid var(--primary);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-top: 2rem;
+  color: #333;
+}
