@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import ProductQR from './ProductQR';
 
 function DashboardHome() {
   return (
@@ -9,6 +10,7 @@ function DashboardHome() {
       <ul className="admin-list">
         <li><Link className="link" to="add-product">Add Product</Link></li>
         <li><Link className="link" to="remove-product">Remove Product</Link></li>
+        <li><Link className="link" to="generate">Generate Product QR</Link></li>
         <li><Link className="link" to="/login">Logout</Link></li>
       </ul>
       <div className="note">
@@ -43,14 +45,26 @@ function RemoveProduct() {
   );
 }
 
+function GenerateQRPage() {
+  return (
+    <div className="card">
+      <h3>Generate Product QR</h3>
+      <ProductQR />
+    </div>
+  );
+}
+
+
 function AdminDashboard() {
   return (
     <Routes>
       <Route path="/" element={<DashboardHome />} />
       <Route path="add-product" element={<AddProduct />} />
       <Route path="remove-product" element={<RemoveProduct />} />
+      <Route path="generate" element={<GenerateQRPage />} />
+
     </Routes>
   );
 }
 
-export default AdminDashboard; 
+export default AdminDashboard;
