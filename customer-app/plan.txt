@@ -1,0 +1,8 @@
+ 
+login ->                   home                                   history ->                      profile
+google login              scan QR                              scanned products                                                         
+email pass                ingredients check                                                                                       
+                          track products
+                           - shell life of the product
+                          ways to recycle product
+                          expiry notification
