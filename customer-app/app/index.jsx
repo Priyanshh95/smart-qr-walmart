@@ -24,6 +24,12 @@ export default function Index() {
             >
               <Text className="text-white font-bold text-base">Sign Up</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => router.push("/home")} 
+              className=" px-6 py-4 rounded-lg items-center mt-4"
+            >
+              <Text className="text-white text-center underline">Sign in as Guest ?</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
