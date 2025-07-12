@@ -10,7 +10,13 @@ Smart QR Walmart is a smart and efficient solution aimed at enhancing the shoppi
 
 ## 📁 Folder Structure
 
-<pre> ``` smart-qr-walmart/ ├── admin-dashboard/ # Admin interface (React) ├── backend/ # Backend APIs (Node.js/Express or similar) ├── customer-app/ # Customer-facing React app └── README.md ``` </pre>  
+```
+smart-qr-walmart/
+├── admin-dashboard/     # Admin interface (React)
+├── backend/             # Backend APIs (Node.js/Express or similar)
+├── customer-app/        # Customer-facing React app
+└── README.md
+```
 
 ---
 
