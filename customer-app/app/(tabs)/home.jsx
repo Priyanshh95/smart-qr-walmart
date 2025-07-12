@@ -23,25 +23,25 @@ const homeTopImage = require('../../assets/images/hometop.png');
 const boxData = [
   {
     title: 'Scan QR Code',
-    gradient: ['#FF7F7F', '#FFB3A7'],
+    gradient: ['#FF6B6B', '#FF8E8E', '#FFB3A7'],
     image: dummyImages[0],
     onPress: () => {},
   },
   {
     title: 'Track a Product',
-    gradient: ['#4FC3F7', '#A7E6FF'],
+    gradient: ['#4ECDC4', '#6BD5F0', '#A7E6FF'],
     image: dummyImages[1],
     onPress: () => {},
   },
   {
     title: 'Ways to Recycle',
-    gradient: ['#34D399', '#A7FFD6'],
+    gradient: ['#45B7D1', '#5CDB95', '#A7FFD6'],
     image: dummyImages[2],
     onPress: () => {},
   },
   {
     title: 'Ingredient Check',
-    gradient: ['#F472B6', '#FFD6E0'],
+    gradient: ['#FF6B9D', '#FF8FB1', '#FFD6E0'],
     image: dummyImages[3],
     onPress: () => {},
   },
@@ -68,6 +68,8 @@ export default function Home() {
             >
               <Image source={box.image} style={styles.icon} resizeMode="contain" />
               <Text style={styles.title}>{box.title}</Text>
+              {/* Add subtle overlay for 3D effect */}
+              <View style={styles.overlay} />
             </LinearGradient>
           </TouchableOpacity>
         ))}
@@ -108,16 +110,27 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     justifyContent: 'center',
     alignItems: 'center',
+    // Multiple shadow layers for realistic 3D effect
     shadowColor: '#000',
-    shadowOpacity: 0.12,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 8,
+    shadowOpacity: 0.25,
+    shadowRadius: 15,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 12,
+    // Add border for depth
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    // Inner shadow effect using overlay
+    position: 'relative',
   },
   icon: {
     width: 70,
     height: 70,
     marginBottom: 18,
+    // Add subtle shadow to icon
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
   },
   title: {
     fontSize: 18,
@@ -125,5 +138,19 @@ const styles = StyleSheet.create({
     color: '#222',
     textAlign: 'center',
     letterSpacing: 0.2,
+    // Add text shadow for depth
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 32,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Subtle white overlay
+    zIndex: 1, // Ensure it's above the gradient
   },
 });
