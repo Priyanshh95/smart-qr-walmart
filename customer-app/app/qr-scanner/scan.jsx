@@ -4,6 +4,12 @@ import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { firebaseApp } from '../../firebase'; // adjust path if needed
+
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 
 export default function QRUpload() {
   const router = useRouter();
@@ -49,6 +55,16 @@ export default function QRUpload() {
         ) {
           setQrResult(data[0].symbol[0].data);
           Alert.alert('QR Code Found', data[0].symbol[0].data);
+          // Save to Firestore
+          if (auth.currentUser) {
+            await addDoc(
+              collection(db, 'users', auth.currentUser.uid, 'qr_history'),
+              {
+                data: data[0].symbol[0].data,
+                timestamp: serverTimestamp(),
+              }
+            );
+          }
         } else {
           setQrResult('No QR code found in the image.');
           Alert.alert('No QR code found in the image.');
