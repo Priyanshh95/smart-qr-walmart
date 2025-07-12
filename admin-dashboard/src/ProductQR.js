@@ -8,19 +8,23 @@ const ProductQR = () => {
   const [name, setName] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [trackingId, setTrackingId] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [packedOnDate, setPackedOnDate] = useState('');
 
-  // ✅ Define userEmail at the top of your component
   const userEmail = localStorage.getItem("userEmail");
 
   const handleAddProduct = async () => {
-    if (!name || !ingredients || !trackingId || !userEmail)
+    if (!name || !ingredients || !trackingId || !expiryDate || !packedOnDate || !userEmail) {
       return alert('Fill all fields and login first');
+    }
 
     const newProduct = {
       id: Date.now(),
       name,
       ingredients,
       trackingId,
+      expiryDate,
+      packedOnDate
     };
 
     try {
@@ -33,12 +37,13 @@ const ProductQR = () => {
       setName('');
       setIngredients('');
       setTrackingId('');
+      setExpiryDate('');
+      setPackedOnDate('');
     } catch (err) {
       console.error("Error saving QR", err);
     }
   };
 
-  // ✅ Add userEmail to the dependency array
   useEffect(() => {
     const fetchSaved = async () => {
       if (!userEmail) return;
@@ -51,7 +56,7 @@ const ProductQR = () => {
     };
 
     fetchSaved();
-  }, [userEmail]); // ✅ Dependency array includes userEmail
+  }, [userEmail]);
 
   return (
     <div style={{ padding: 20 }}>
@@ -74,6 +79,20 @@ const ProductQR = () => {
         onChange={(e) => setTrackingId(e.target.value)}
         style={{ marginRight: 10 }}
       />
+      <input
+        type="date"
+        value={packedOnDate}
+        onChange={(e) => setPackedOnDate(e.target.value)}
+        style={{ marginRight: 10 }}
+        title="Packed On Date"
+      />
+      <input
+        type="date"
+        value={expiryDate}
+        onChange={(e) => setExpiryDate(e.target.value)}
+        style={{ marginRight: 10 }}
+        title="Expiry Date"
+      />
       <button onClick={handleAddProduct}>Add & Generate QR</button>
 
       <div style={{ marginTop: 30 }}>
@@ -90,6 +109,8 @@ const ProductQR = () => {
             <h4>{product.name}</h4>
             <p><strong>Ingredients:</strong> {product.ingredients}</p>
             <p><strong>Tracking ID:</strong> {product.trackingId}</p>
+            <p><strong>Packed On:</strong> {product.packedOnDate}</p>
+            <p><strong>Expiry Date:</strong> {product.expiryDate}</p>
             <QRCodeSVG value={JSON.stringify(product)} size={128} />
           </div>
         ))}
