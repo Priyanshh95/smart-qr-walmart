@@ -1,0 +1,13 @@
+{
+  "userEmail": "siddhii@gmail.com",
+  "products": [
+    {
+      "id": 1752345208003,
+      "name": "oil",
+      "ingredients": "oil",
+      "price": 257,
+      "trackingId": "567",
+      "timestamp": "2025-07-12T18:33:28.003Z"
+    }
+  ]
+}

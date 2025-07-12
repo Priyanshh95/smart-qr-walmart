@@ -54,3 +54,28 @@
   border: 1px solid #ccc;
   border-radius: 6px;
 }
+.dashboard-container {
+  width: 400px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard-container input {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.dashboard-container button {
+  padding: 10px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.dashboard-container button:hover {
+  background-color: #0056b3;
+}

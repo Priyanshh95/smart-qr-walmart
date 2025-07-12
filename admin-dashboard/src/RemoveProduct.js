@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Dashboard.css';
 
 const RemoveProduct = () => {
   const [productId, setProductId] = useState('');
 
-  const handleRemove = () => {
-    if (!productId) return alert("Enter Product ID to remove");
-    alert(`Product with ID ${productId} removed (stubbed)`);
-    setProductId('');
+  const handleRemove = async () => {
+    if (!productId) return alert("Enter Product ID");
+
+    const userEmail = localStorage.getItem("userEmail");
+
+    try {
+      const res = await axios.delete(`http://localhost:5000/api/delete-product/${userEmail}/${productId}`);
+      alert("✅ " + res.data.message);
+      setProductId('');
+    } catch (err) {
+      alert("❌ Failed to delete: " + (err.response?.data || err.message));
+    }
   };
 
   return (
