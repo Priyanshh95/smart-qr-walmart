@@ -52,7 +52,7 @@ Database: MongoDB / (assumed from typical stack)
 QR: QR Code libraries for generation & scanning
 
 ## 👥 Contributors
-Siddhi Singhal
-Satyam Rathi
-Gaurav Agarwal
-Priyanshu Bansal
+Siddhi Singhal  
+Satyam Rathi  
+Gaurav Agarwal  
+Priyanshu Bansal  
