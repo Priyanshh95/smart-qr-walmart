@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, getDocs, query, orderBy } from "firebase/firestore";
 import { firebaseApp } from "../../firebase";
 import { useFocusEffect } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
@@ -13,6 +12,7 @@ const db = getFirestore(firebaseApp);
 export default function History() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const fetchHistory = async () => {
     if (!auth.currentUser) {
@@ -25,10 +25,19 @@ export default function History() {
         orderBy("timestamp", "desc")
       );
       const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const data = querySnapshot.docs.map(doc => {
+        let parsed = {};
+        try {
+          parsed = JSON.parse(doc.data().data);
+        } catch {
+          parsed = {};
+        }
+        return {
+          id: doc.id,
+          ...doc.data(),
+          parsed,
+        };
+      }).filter(item => item.parsed && Object.keys(item.parsed).length > 0);
       setHistory(data);
     } catch (error) {
       console.error('Error fetching history:', error);
@@ -37,7 +46,6 @@ export default function History() {
     }
   };
 
-  // Refresh data every time the user visits this page
   useFocusEffect(
     React.useCallback(() => {
       fetchHistory();
@@ -48,7 +56,8 @@ export default function History() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>QR History</Text>
+          <Text style={styles.headerTitle}>History</Text>
+          <Text style={styles.headerSubtitle}>0</Text>
         </View>
         <View style={styles.centered}>
           <ActivityIndicator size="large" color="#FF6B6B" />
@@ -62,10 +71,10 @@ export default function History() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>QR History</Text>
+          <Text style={styles.headerTitle}>History</Text>
+          <Text style={styles.headerSubtitle}>0</Text>
         </View>
         <View style={styles.centered}>
-          <Ionicons name="qr-code-outline" size={64} color="#ccc" />
           <Text style={styles.emptyText}>No QR scan history found</Text>
           <Text style={styles.emptySubtext}>Start scanning QR codes to see them here</Text>
         </View>
@@ -73,47 +82,34 @@ export default function History() {
     );
   }
 
-  const renderHistoryItem = ({ item, index }) => {
-    const gradients = [
-      ['#FF6B6B', '#FF8E8E', '#FFB3A7'],
-      ['#4ECDC4', '#6BD5F0', '#A7E6FF'],
-      ['#45B7D1', '#5CDB95', '#A7FFD6'],
-      ['#FF6B9D', '#FF8FB1', '#FFD6E0'],
-    ];
-    const gradient = gradients[index % gradients.length];
-
+  const renderHistoryItem = ({ item }) => {
+    const name = item.parsed.name || '-';
+    const trackingId = item.parsed.trackingId || '-';
+    let dateStr = 'No date';
+    if (item.timestamp?.toDate) {
+      const d = item.timestamp.toDate();
+      dateStr = d.toLocaleDateString();
+    }
     return (
-      <View style={styles.itemContainer}>
-        <LinearGradient
-          colors={gradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.historyBox}
-        >
-          <View style={styles.boxContent}>
-            <Ionicons name="qr-code" size={24} color="#fff" style={styles.qrIcon} />
-            <Text style={styles.data} numberOfLines={3}>
-              {item.data}
-            </Text>
-            <Text style={styles.timestamp}>
-              {item.timestamp?.toDate
-                ? item.timestamp.toDate().toLocaleString()
-                : "No timestamp"}
-            </Text>
-          </View>
-          <View style={styles.overlay} />
-        </LinearGradient>
-      </View>
+      <TouchableOpacity
+        style={styles.itemBox}
+        activeOpacity={0.85}
+        onPress={() => router.push({ pathname: '/qr-scanner/result', params: { data: item.data } })}
+      >
+        <View style={styles.rowBox}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.trackingId}>{trackingId}</Text>
+        </View>
+        <Text style={styles.date}>{dateStr}</Text>
+      </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>QR History</Text>
-        <Text style={styles.headerSubtitle}>
-          {history.length} scan{history.length !== 1 ? 's' : ''} found
-        </Text>
+        <Text style={styles.headerTitle}>History</Text>
+        <Text style={styles.headerSubtitle}>{history.length}</Text>
       </View>
       <FlatList
         data={history}
@@ -132,24 +128,37 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBF6E2',
   },
   header: {
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    paddingBottom: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    paddingHorizontal: 24,
+    paddingTop: 40,
+    paddingBottom: 16,
+    backgroundColor: '#08522D',
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    borderBottomColor: '#E9ECEF',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#222',
-    textAlign: 'center',
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: -0.5,
   },
   headerSubtitle: {
-    fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
-    marginTop: 4,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#10B981',
+    backgroundColor: '#F0FDF4',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#D1FAE5',
   },
   centered: {
     flex: 1,
@@ -159,76 +168,72 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: '#666',
+    color: '#6C757D',
     marginTop: 16,
     textAlign: 'center',
+    fontWeight: '500',
   },
   emptyText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#666',
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#495057',
     marginTop: 16,
     textAlign: 'center',
   },
   emptySubtext: {
-    fontSize: 14,
-    color: '#999',
+    fontSize: 16,
+    color: '#868E96',
     marginTop: 8,
     textAlign: 'center',
+    fontWeight: '400',
   },
   listContainer: {
-    padding: 16,
+    padding: 20,
   },
-  itemContainer: {
-    marginBottom: 16,
-  },
-  historyBox: {
+  itemBox: {
+    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 20,
-    position: 'relative',
-    // 3D shadow effects
+    marginBottom: 16,
     shadowColor: '#000',
-    shadowOpacity: 0.25,
-    shadowRadius: 15,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 12,
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: '#F1F3F4',
   },
-  boxContent: {
-    position: 'relative',
-    zIndex: 2,
-  },
-  qrIcon: {
-    marginBottom: 12,
-    alignSelf: 'center',
-  },
-  data: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
+  rowBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 8,
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
-  timestamp: {
-    fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.8)',
-    textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 1,
+  name: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    flex: 1,
+    letterSpacing: -0.3,
   },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    zIndex: 1,
+  trackingId: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#4ECDC4',
+    marginLeft: 12,
+    flexShrink: 0,
+    backgroundColor: '#F0FFFD',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E0F8F5',
+  },
+  date: {
+    fontSize: 14,
+    color: '#868E96',
+    marginTop: 4,
+    marginLeft: 2,
+    fontWeight: '500',
   },
 });

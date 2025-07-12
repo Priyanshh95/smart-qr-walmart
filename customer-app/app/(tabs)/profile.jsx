@@ -60,9 +60,13 @@ const Profile = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: Colors.light.background }}
+      style={{ flex: 1, backgroundColor: '#FBF6E2' }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Profile</Text>
+        <Text style={styles.headerSubtitle}>Settings</Text>
+      </View>
       <ScrollView contentContainerStyle={styles.centralizedScroll} keyboardShouldPersistTaps="handled">
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.avatarWrapper} activeOpacity={0.8}>
@@ -74,13 +78,12 @@ const Profile = () => {
               <Feather name="edit-2" size={18} color="#fff" />
             </View>
           </TouchableOpacity>
-          <Text style={styles.profileTitle}>Profile</Text>
           <Text style={styles.displayName}>{user.displayName || 'User'}</Text>
         </View>
         <View style={styles.cardList}>
           {/* Name Field */}
           <ProfileCard
-            icon={<Ionicons name="person-outline" size={22} color={Colors.SECONDARY} />}
+            icon={<Ionicons name="person-outline" size={22} color="#10B981" />}
             value={editingField === 'name' ? (
               <EditField
                 value={name}
@@ -97,21 +100,21 @@ const Profile = () => {
           />
           {/* Email Field */}
           <ProfileCard
-            icon={<MaterialIcons name="email" size={22} color={Colors.SECONDARY} />}
+            icon={<MaterialIcons name="email" size={22} color="#10B981" />}
             value={user.email}
             editable
             onEdit={() => Alert.alert('Edit Email', 'Email editing requires re-authentication and is not implemented in this demo.')}
           />
           {/* Password Field */}
           <ProfileCard
-            icon={<Feather name="lock" size={22} color={Colors.SECONDARY} />}
+            icon={<Feather name="lock" size={22} color="#10B981" />}
             value={'********'}
             editable
             onEdit={() => Alert.alert('Edit Password', 'Password editing requires re-authentication and is not implemented in this demo.')}
           />
           {/* Location Field */}
           <ProfileCard
-            icon={<Entypo name="location-pin" size={22} color={Colors.SECONDARY} />}
+            icon={<Entypo name="location-pin" size={22} color="#10B981" />}
             value={editingField === 'location' ? (
               <EditField
                 value={location}
@@ -128,15 +131,15 @@ const Profile = () => {
           />
           {/* Support Row */}
           <ProfileCard
-            icon={<Feather name="help-circle" size={22} color={Colors.SECONDARY} />}
+            icon={<Feather name="help-circle" size={22} color="#10B981" />}
             value={'Support'}
-            onPress={() => Alert.alert('Support', 'Support feature coming soon!')}
+            onPress={() => router.push('/support')}
             arrow
           />
         </View>
         <TouchableOpacity style={styles.logoutBtn} onPress={handleSignOut}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Feather name="log-out" size={20} color={Colors.SECONDARY} style={{ marginRight: 8 }} />
+            <Feather name="log-out" size={20} color="#FF6B6B" style={{ marginRight: 8 }} />
             <Text style={styles.logoutText}>Log Out</Text>
           </View>
         </TouchableOpacity>
@@ -193,112 +196,154 @@ const ProfileCard = ({ icon, value, editable, onEdit, onPress, arrow }) => (
 );
 
 const styles = StyleSheet.create({
+  header: {
+    paddingHorizontal: 24,
+    paddingTop: 40,
+    paddingBottom: 16,
+    backgroundColor: '#08522D',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: -0.5,
+  },
+  headerSubtitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#10B981',
+    backgroundColor: '#F0FDF4',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#D1FAE5',
+  },
   centralizedScroll: {
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     minHeight: '100%',
-    backgroundColor: Colors.light.background,
-    paddingVertical: 24,
+    backgroundColor: '#FBF6E2',
+    paddingVertical: 16,
     paddingHorizontal: 16,
+    paddingBottom: 100,
+    paddingTop: 20,
   },
   headerContainer: {
     alignItems: 'center',
-    marginBottom: 8,
-    backgroundColor: Colors.light.background,
+    marginBottom: 16,
+    backgroundColor: '#FBF6E2',
     paddingHorizontal: 16,
   },
   avatarWrapper: {
     position: 'relative',
-    marginBottom: 8,
+    marginBottom: 16,
   },
   avatar: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    borderWidth: 3,
-    borderColor: Colors.SECONDARY,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 4,
+    borderColor: '#10B981',
     backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
   },
   editIconWrapper: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: Colors.SECONDARY,
-    borderRadius: 16,
-    padding: 4,
-    borderWidth: 2,
+    backgroundColor: '#10B981',
+    borderRadius: 18,
+    padding: 6,
+    borderWidth: 3,
     borderColor: '#fff',
-  },
-  profileTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: Colors.SECONDARY,
-    marginTop: 8,
-    marginBottom: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   displayName: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: Colors.dark.text,
-    marginBottom: 12,
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 8,
+    letterSpacing: -0.3,
   },
   cardList: {
     width: '100%',
     maxWidth: 400,
     marginTop: 8,
-    marginBottom: 24,
+    marginBottom: 16,
     paddingHorizontal: 8,
   },
   card: {
-    backgroundColor: Colors.PRIMARY,
-    borderRadius: 12,
-    paddingVertical: 16,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    paddingVertical: 18,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 14,
+    marginBottom: 16,
     shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
-    minWidth: 300,
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#F1F3F4',
   },
   cardText: {
     fontSize: 16,
-    color: Colors.dark.text,
+    color: '#1A1A1A',
+    fontWeight: '500',
   },
   logoutBtn: {
-    backgroundColor: Colors.PRIMARY,
-    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
     marginTop: 8,
-    marginBottom: 32,
-    paddingVertical: 16,
+    marginBottom: 80,
+    paddingVertical: 18,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
     minWidth: 300,
     paddingHorizontal: 20,
+    borderWidth: 1,
+    borderColor: '#F1F3F4',
   },
   logoutText: {
-    color: Colors.SECONDARY,
-    fontWeight: 'bold',
+    color: '#FF6B6B',
+    fontWeight: '600',
     fontSize: 16,
   },
   centered: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.light.background,
+    backgroundColor: '#FBF6E2',
   },
   loadingText: {
-    color: Colors.SECONDARY,
+    color: '#10B981',
     fontSize: 18,
+    fontWeight: '500',
   },
 });
 

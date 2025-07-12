@@ -53,17 +53,26 @@ export default function QRUpload() {
           data[0].symbol[0] &&
           data[0].symbol[0].data
         ) {
-          setQrResult(data[0].symbol[0].data);
-          Alert.alert('QR Code Found', data[0].symbol[0].data);
+          const qrData = data[0].symbol[0].data;
+          setQrResult(qrData);
+          Alert.alert('QR Code Found', qrData);
           // Save to Firestore
           if (auth.currentUser) {
             await addDoc(
               collection(db, 'users', auth.currentUser.uid, 'qr_history'),
               {
-                data: data[0].symbol[0].data,
+                data: qrData,
                 timestamp: serverTimestamp(),
               }
             );
+          }
+          // If QR data is JSON, navigate to result page
+          try {
+            const parsed = JSON.parse(qrData);
+            router.push({ pathname: '/qr-scanner/result', params: { data: JSON.stringify(parsed) } });
+            return;
+          } catch (e) {
+            // Not JSON, just show as text
           }
         } else {
           setQrResult('No QR code found in the image.');
