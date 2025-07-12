@@ -10,11 +10,9 @@ Smart QR Walmart is a smart and efficient solution aimed at enhancing the shoppi
 
 ## 📁 Folder Structure
 
-smart-qr-walmart/
-├── admin-dashboard/ # Admin interface (React)  
-├── backend/ # Backend APIs (Node.js/Express or similar)  
-├── customer-app/ # Customer-facing React app  
-└── README.md  
+<pre> ``` smart-qr-walmart/ ├── admin-dashboard/ # Admin interface (React) ├── backend/ # Backend APIs (Node.js/Express or similar) ├── customer-app/ # Customer-facing React app └── README.md ``` </pre>  
+
+---
 
 ## 🚀 How to Run the Project
 
@@ -22,16 +20,22 @@ smart-qr-walmart/
 git clone https://github.com/satyamrathirar/smart-qr-walmart.git
 cd smart-qr-walmart
 
+---
+
 ## Run Customer App
 cd customer-app
 npm install
 npm start
 App will start on: http://localhost:3000
 
+---
+
 ## Run Admin Dashboard (optional)
 cd admin-dashboard
 npm install
 npm start
+
+---
 
 ## ✨ Features
 QR code-based product scanning
@@ -42,6 +46,8 @@ Admin panel for managing products and generating QR codes
 
 RESTful APIs for communication between frontend and backend
 
+---
+
 ## 🛠️ Tech Stack
 Frontend: React, HTML, CSS
 
@@ -50,6 +56,8 @@ Backend: Node.js, Express (assumed)
 Database: MongoDB / (assumed from typical stack)
 
 QR: QR Code libraries for generation & scanning
+
+---
 
 ## 👥 Contributors
 Siddhi Singhal  
