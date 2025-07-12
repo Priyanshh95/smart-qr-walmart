@@ -20,35 +20,36 @@ const dummyImages = [
 
 const homeTopImage = require('../../assets/images/hometop.png');
 
-const boxData = [
-  {
-    title: 'Scan QR Code',
-    gradient: ['#FF6B6B', '#FF8E8E', '#FFB3A7'],
-    image: dummyImages[0],
-    onPress: () => {},
-  },
-  {
-    title: 'Track a Product',
-    gradient: ['#4ECDC4', '#6BD5F0', '#A7E6FF'],
-    image: dummyImages[1],
-    onPress: () => {},
-  },
-  {
-    title: 'Ways to Recycle',
-    gradient: ['#45B7D1', '#5CDB95', '#A7FFD6'],
-    image: dummyImages[2],
-    onPress: () => {},
-  },
-  {
-    title: 'Ingredient Check',
-    gradient: ['#FF6B9D', '#FF8FB1', '#FFD6E0'],
-    image: dummyImages[3],
-    onPress: () => {},
-  },
-];
-
 export default function Home() {
   const router = useRouter();
+
+  const boxData = [
+    {
+      title: 'Scan QR Code',
+      gradient: ['#FF6B6B', '#FF8E8E', '#FFB3A7'],
+      image: dummyImages[0],
+      onPress: () => router.push('/qr-scanner/scan'),
+    },
+    {
+      title: 'Track a Product',
+      gradient: ['#4ECDC4', '#6BD5F0', '#A7E6FF'],
+      image: dummyImages[1],
+      onPress: () => {},
+    },
+    {
+      title: 'Ways to Recycle',
+      gradient: ['#45B7D1', '#5CDB95', '#A7FFD6'],
+      image: dummyImages[2],
+      onPress: () => {},
+    },
+    {
+      title: 'Ingredient Check',
+      gradient: ['#FF6B9D', '#FF8FB1', '#FFD6E0'],
+      image: dummyImages[3],
+      onPress: () => {},
+    },
+  ];
+
   return (
     <View style={styles.container}>
       <Image source={homeTopImage} style={styles.topImage} resizeMode="contain" />
