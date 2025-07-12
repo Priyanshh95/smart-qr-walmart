@@ -1,17 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './Login';
-import Signup from './Signup';
-import AdminDashboard from './AdminDashboard';
+import AdminLogin from './AdminLogin';
+import AdminSignup from './AdminSignup';
+import ProductQR from './ProductQR';
 
 function App() {
+  const isLoggedIn = localStorage.getItem("userEmail");
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/admin/*" element={<AdminDashboard />} />
+        <Route path="/login" element={<AdminLogin />} />
+        <Route path="/signup" element={<AdminSignup />} />
+        <Route
+          path="/dashboard"
+          element={isLoggedIn ? <ProductQR /> : <Navigate to="/login" />}
+        />
       </Routes>
     </Router>
   );

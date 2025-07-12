@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+// src/ProductQR.js
+import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import axios from 'axios';
 
 const ProductQR = () => {
   const [products, setProducts] = useState([]);
@@ -7,20 +9,49 @@ const ProductQR = () => {
   const [ingredients, setIngredients] = useState('');
   const [trackingId, setTrackingId] = useState('');
 
-  const handleAddProduct = () => {
-    if (!name || !ingredients || !trackingId) return alert('Fill all fields');
-    
+  // ✅ Define userEmail at the top of your component
+  const userEmail = localStorage.getItem("userEmail");
+
+  const handleAddProduct = async () => {
+    if (!name || !ingredients || !trackingId || !userEmail)
+      return alert('Fill all fields and login first');
+
     const newProduct = {
       id: Date.now(),
       name,
       ingredients,
       trackingId,
     };
-    setProducts([...products, newProduct]);
-    setName('');
-    setIngredients('');
-    setTrackingId('');
+
+    try {
+      await axios.post("http://localhost:5000/api/save-product-qr", {
+        userEmail,
+        product: newProduct,
+      });
+
+      setProducts([...products, newProduct]);
+      setName('');
+      setIngredients('');
+      setTrackingId('');
+    } catch (err) {
+      console.error("Error saving QR", err);
+    }
   };
+
+  // ✅ Add userEmail to the dependency array
+  useEffect(() => {
+    const fetchSaved = async () => {
+      if (!userEmail) return;
+      try {
+        const res = await axios.get(`http://localhost:5000/api/get-user-products/${userEmail}`);
+        if (res.data?.products) setProducts(res.data.products);
+      } catch (err) {
+        console.error("Error fetching QR data", err);
+      }
+    };
+
+    fetchSaved();
+  }, [userEmail]); // ✅ Dependency array includes userEmail
 
   return (
     <div style={{ padding: 20 }}>
@@ -59,10 +90,7 @@ const ProductQR = () => {
             <h4>{product.name}</h4>
             <p><strong>Ingredients:</strong> {product.ingredients}</p>
             <p><strong>Tracking ID:</strong> {product.trackingId}</p>
-            <QRCodeSVG
-              value={JSON.stringify(product)}
-              size={128}
-            />
+            <QRCodeSVG value={JSON.stringify(product)} size={128} />
           </div>
         ))}
       </div>

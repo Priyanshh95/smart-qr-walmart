@@ -1,0 +1,17 @@
+{
+  "userEmail": "singhal@gmail.com",
+  "products": [
+    {
+      "id": 1752341856740,
+      "name": "apple",
+      "ingredients": "fruit",
+      "trackingId": "001"
+    },
+    {
+      "id": 1752341872022,
+      "name": "banana",
+      "ingredients": "fruit",
+      "trackingId": "006"
+    }
+  ]
+}

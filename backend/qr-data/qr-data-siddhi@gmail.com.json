@@ -1,0 +1,17 @@
+{
+  "userEmail": "siddhi@gmail.com",
+  "products": [
+    {
+      "id": 1752341912057,
+      "name": "butter",
+      "ingredients": "salt",
+      "trackingId": "008"
+    },
+    {
+      "id": 1752341929092,
+      "name": "milk",
+      "ingredients": "dairy",
+      "trackingId": "004"
+    }
+  ]
+}
