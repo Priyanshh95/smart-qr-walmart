@@ -19,23 +19,21 @@ smart-qr-walmart/
 ## 🚀 How to Run the Project
 
 ### 1. Clone the Repository
-
-```bash
 git clone https://github.com/satyamrathirar/smart-qr-walmart.git
 cd smart-qr-walmart
 
-2. Run Customer App
+## Run Customer App
 cd customer-app
 npm install
 npm start
 App will start on: http://localhost:3000
 
-3. Run Admin Dashboard (optional)
+## Run Admin Dashboard (optional)
 cd admin-dashboard
 npm install
 npm start
 
-✨ Features
+## ✨ Features
 QR code-based product scanning
 
 Product info & cart system for users
@@ -44,7 +42,7 @@ Admin panel for managing products and generating QR codes
 
 RESTful APIs for communication between frontend and backend
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 Frontend: React, HTML, CSS
 
 Backend: Node.js, Express (assumed)
@@ -53,7 +51,7 @@ Database: MongoDB / (assumed from typical stack)
 
 QR: QR Code libraries for generation & scanning
 
-👥 Contributors
+## 👥 Contributors
 Siddhi Singhal
 Satyam Rathi
 Gaurav Agarwal
