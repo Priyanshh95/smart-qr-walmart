@@ -40,7 +40,7 @@ export default function Home() {
       title: 'Ways to Recycle',
       gradient: ['#45B7D1', '#5CDB95', '#A7FFD6'],
       image: dummyImages[2],
-      onPress: () => {},
+      onPress: () => router.push('/ways-to-recycle'),
     },
     {
       title: 'Ingredient Check',
