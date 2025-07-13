@@ -6,8 +6,6 @@ import { useRouter } from 'expo-router';
 import { Ionicons, MaterialIcons, Feather, Entypo } from '@expo/vector-icons';
 import { Colors } from '../../assets/colors';
 
-const AVATAR_PLACEHOLDER = 'https://ui-avatars.com/api/?name=User&background=10b981&color=fff&size=128';
-
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [editingField, setEditingField] = useState(null); // 'name' | 'location' | null
@@ -15,6 +13,27 @@ const Profile = () => {
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  // Function to get user initials from display name
+  const getUserInitials = (displayName) => {
+    if (!displayName || displayName.trim() === '') return 'U';
+    
+    const nameParts = displayName.trim().split(' ');
+    if (nameParts.length === 1) {
+      // Only first name provided - show first letter
+      return nameParts[0].charAt(0).toUpperCase();
+    } else {
+      // Full name provided - show first letter of first name + first letter of last name
+      return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+    }
+  };
+
+  // Function to get avatar URL with user's actual name
+  const getAvatarUrl = (displayName) => {
+    const initials = getUserInitials(displayName);
+    console.log('Avatar Debug:', { displayName, initials });
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName || 'User')}&background=10b981&color=fff&size=128`;
+  };
 
   useEffect(() => {
     setUser(auth.currentUser);
@@ -71,7 +90,8 @@ const Profile = () => {
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.avatarWrapper} activeOpacity={0.8}>
             <Image
-              source={{ uri: user.photoURL || AVATAR_PLACEHOLDER }}
+              key={user.displayName || 'default'} // Force re-render when name changes
+              source={{ uri: user.photoURL || getAvatarUrl(user.displayName) }}
               style={styles.avatar}
             />
             <View style={styles.editIconWrapper}>
