@@ -46,7 +46,7 @@ export default function Home() {
       title: 'Ingredient Check',
       gradient: ['#FF6B9D', '#FF8FB1', '#FFD6E0'],
       image: dummyImages[3],
-      onPress: () => {},
+      onPress: () => router.push('/ingredient-check'),
     },
   ];
 

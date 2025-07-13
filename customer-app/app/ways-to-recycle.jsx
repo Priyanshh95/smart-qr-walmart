@@ -15,6 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../assets/colors';
 import axios from 'axios';
 import Constants from 'expo-constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { width } = Dimensions.get('window');
 
@@ -191,10 +192,10 @@ Keep it concise with bullet points.`;
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Text style={styles.backButtonText}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Ways to Recycle</Text>
-        <View style={styles.placeholder} />
+        <View style={{ width: 40 }} />
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -305,16 +306,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  backButtonText: {
-    color: '#fff',
-    fontSize: 25,
-    fontWeight: '600',
-    textAlign: 'center',
-    includeFontPadding: false,
-    textAlignVertical: 'center',
-    lineHeight: 25,
-    marginTop: 2,
   },
   headerTitle: {
     fontSize: 28,
