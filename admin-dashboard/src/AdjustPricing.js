@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { supabase } from './supabaseClient';
 import './Dashboard.css';
 import BackButton from './BackButton';
 import { NavigationBar } from './Dashboard';
@@ -12,16 +12,25 @@ const AdjustPricing = () => {
     if (!productId || !newPrice) return alert("Fill all fields");
 
     const userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) return alert("You must be logged in.");
 
     try {
-      const res = await axios.put(`http://localhost:5000/api/update-price/${userEmail}/${productId}`, {
-        newPrice
-      });
-      alert("✅ " + res.data.message);
-      setProductId('');
-      setNewPrice('');
+      const { error } = await supabase
+        .from('smart-qr')
+        .update({ price: parseFloat(newPrice) })
+        .match({ user_email: userEmail, product_id: productId });
+
+      if (error) {
+        console.error("❌ Update Error:", error.message);
+        alert("❌ Failed to update price.");
+      } else {
+        alert("✅ Price updated successfully.");
+        setProductId('');
+        setNewPrice('');
+      }
     } catch (err) {
-      alert("❌ Failed to update: " + (err.response?.data || err.message));
+      console.error("❌ Unexpected Error:", err.message);
+      alert("❌ Unexpected error occurred.");
     }
   };
 
