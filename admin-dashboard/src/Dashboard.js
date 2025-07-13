@@ -41,13 +41,12 @@ const Dashboard = () => {
           <h2>Admin Dashboard</h2>
           <p>Manage your products and QR codes</p>
         </div>
-
         <div className="dashboard-options">
-          <div className="feature-block">
-            <h3>Add Product</h3>
-            <p>Add new products to your inventory with details like name, ingredients, and pricing.</p>
-            <button className="feature-btn" onClick={() => navigate('/add-product')}>
-              Add Product
+        <div className="feature-block">
+            <h3>Add Product & Generate QR</h3>
+            <p>Add and generate new products to your inventory with details like id, name, ingredients, and pricing etc</p>
+            <button className="feature-btn" onClick={() => navigate('/generate-qr')}>
+              Generate QR
             </button>
           </div>
 
@@ -67,13 +66,7 @@ const Dashboard = () => {
             </button>
           </div>
 
-          <div className="feature-block">
-            <h3>Generate QR</h3>
-            <p>Create QR codes for your products with tracking information and expiry dates.</p>
-            <button className="feature-btn" onClick={() => navigate('/generate-qr')}>
-              Generate QR
-            </button>
-          </div>
+          
         </div>
       </div>
     </div>
