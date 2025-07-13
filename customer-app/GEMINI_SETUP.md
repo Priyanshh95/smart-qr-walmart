@@ -9,11 +9,12 @@
 
 ## Setting Up the API Key
 
-1. Open the `.env` file in the root of the customer-app directory
-2. Replace `your_gemini_api_key_here` with your actual API key:
+1. Create a `.env` file in the root of the customer-app directory
+2. Add your Gemini API key with the following format:
    ```
    GEMINI_API_KEY=your_actual_api_key_here
    ```
+3. Replace `your_actual_api_key_here` with your actual API key from Google AI Studio
 
 ## How the Feature Works
 
@@ -35,7 +36,7 @@ The "Ways to Recycle" page allows users to:
 ## Security
 
 - API key is stored in `.env` file (already added to `.gitignore`)
-- Environment variables are properly configured in `app.json`
+- Environment variables are properly configured in `app.config.js`
 - No API keys are committed to version control
 
 ## Testing
@@ -48,6 +49,7 @@ The "Ways to Recycle" page allows users to:
 
 ## Troubleshooting
 
-- If you see "API Key Missing" error, make sure your `.env` file has the correct API key
+- If you see "API Key Missing" error, make sure your `.env` file has the correct API key with `GEMINI_API_KEY=your_actual_api_key`
 - If API calls fail, check your internet connection and API key validity
-- The app will show helpful error messages for common issues 
+- The app will show helpful error messages for common issues
+- Make sure to restart the development server after adding the `.env` file 

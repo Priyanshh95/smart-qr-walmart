@@ -35,7 +35,17 @@ export default function WaysToRecycle() {
     setHasSearched(true);
 
     try {
-      const apiKey = Constants.expoConfig?.extra?.GEMINI_API_KEY;
+      // Try multiple ways to get the API key
+      const apiKey = process.env.GEMINI_API_KEY || Constants.expoConfig?.extra?.GEMINI_API_KEY;
+      
+      // Debug logging
+      console.log('Environment variable check:', {
+        hasApiKey: !!apiKey,
+        apiKeyLength: apiKey ? apiKey.length : 0,
+        apiKeyStart: apiKey ? apiKey.substring(0, 10) + '...' : 'undefined',
+        fromProcessEnv: !!process.env.GEMINI_API_KEY,
+        fromConstants: !!Constants.expoConfig?.extra?.GEMINI_API_KEY
+      });
       
       if (!apiKey || apiKey === 'your_gemini_api_key_here') {
         Alert.alert(
@@ -97,26 +107,79 @@ Keep it concise with bullet points.`;
     // Split by common section markers and format
     return text.split('\n').map((line, index) => {
       const trimmedLine = line.trim();
+      
       if (trimmedLine.startsWith('•') || trimmedLine.startsWith('-')) {
         return (
           <Text key={index} style={styles.bulletPoint}>
-            {trimmedLine}
+            {formatMarkdownText(trimmedLine)}
           </Text>
         );
       } else if (trimmedLine.match(/^\d+\./)) {
         return (
           <Text key={index} style={styles.numberedPoint}>
-            {trimmedLine}
+            {formatMarkdownText(trimmedLine)}
           </Text>
         );
       } else if (trimmedLine && trimmedLine.length > 0) {
         return (
           <Text key={index} style={styles.paragraph}>
-            {trimmedLine}
+            {formatMarkdownText(trimmedLine)}
           </Text>
         );
       }
       return <Text key={index} style={styles.spacing} />;
+    });
+  };
+
+  const formatMarkdownText = (text) => {
+    // Check if this is a header (starts with #)
+    if (text.startsWith('#')) {
+      const headerLevel = text.match(/^#+/)[0].length;
+      const headerText = text.replace(/^#+\s*/, ''); // Remove # symbols and spaces
+      
+      let headerStyle;
+      switch (headerLevel) {
+        case 1:
+          headerStyle = styles.header1;
+          break;
+        case 2:
+          headerStyle = styles.header2;
+          break;
+        case 3:
+          headerStyle = styles.header3;
+          break;
+        default:
+          headerStyle = styles.header3;
+      }
+      
+      return (
+        <Text style={headerStyle}>
+          {formatBoldText(headerText)}
+        </Text>
+      );
+    }
+    
+    // For regular text, handle bold formatting
+    return formatBoldText(text);
+  };
+
+  const formatBoldText = (text) => {
+    // Split text by ** markers
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    
+    return parts.map((part, partIndex) => {
+      // Check if this part is wrapped in ** (bold)
+      if (part.startsWith('**') && part.endsWith('**')) {
+        // Remove the ** markers and make it bold
+        const boldText = part.slice(2, -2);
+        return (
+          <Text key={partIndex} style={styles.boldText}>
+            {boldText}
+          </Text>
+        );
+      }
+      // Regular text
+      return part;
     });
   };
 
@@ -250,7 +313,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     includeFontPadding: false,
     textAlignVertical: 'center',
-    paddingBottom: 10,
+    lineHeight: 25,
+    marginTop: 2,
   },
   headerTitle: {
     fontSize: 28,
@@ -388,6 +452,31 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     marginBottom: 16,
     fontWeight: '400',
+  },
+  boldText: {
+    fontWeight: '700',
+    color: '#1A1A1A',
+  },
+  header1: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#1A1A1A',
+    marginBottom: 16,
+    marginTop: 8,
+  },
+  header2: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 12,
+    marginTop: 6,
+  },
+  header3: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1A1A1A',
+    marginBottom: 10,
+    marginTop: 4,
   },
   spacing: {
     height: 12,
