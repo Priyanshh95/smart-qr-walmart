@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 function getExpiryStatus(expiryDate) {
   const today = new Date();
@@ -34,58 +36,91 @@ export default function QRResult() {
   const expiryStatus = getExpiryStatus(data.expiryDate);
 
   return (
-    <LinearGradient colors={["#F3F6F4", "#E8F0F8"]} style={styles.bg}>
-      <View style={styles.container}>
-        <LinearGradient colors={["#FF8E8E", "#FFB3A7"]} style={styles.headerCard}>
-          <Ionicons name="cube" size={32} color="#fff" style={{ marginBottom: 8 }} />
-          <Text style={styles.productName}>{data.name || 'Product'}</Text>
-        </LinearGradient>
-        <View style={styles.card}>
-          <View style={styles.row}>
-            <Ionicons name="calendar-outline" size={20} color="#4B5563" />
-            <Text style={styles.label}>Packaging Date</Text>
-            <Text style={styles.value}>{data.packedOnDate || '-'}</Text>
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.row}>
-            <Ionicons name="cube-outline" size={20} color="#4B5563" />
-            <Text style={styles.label}>Product Journey</Text>
-            <Text style={styles.value}>{data.trackingId || '-'}</Text>
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.row}>
-            <Ionicons name="timer-outline" size={20} color="#4B5563" />
-            <Text style={styles.label}>Expiry Countdown</Text>
-            <StatusChip label={expiryStatus.label} color={expiryStatus.color} />
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.row}>
-            <Ionicons name="calendar-outline" size={20} color="#4B5563" />
-            <Text style={styles.label}>Expiry Date</Text>
-            <Text style={styles.value}>{data.expiryDate || '-'}</Text>
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.row}>
-            <Ionicons name="restaurant-outline" size={20} color="#4B5563" />
-            <Text style={styles.label}>Ingredients</Text>
-            <View style={styles.ingredientsContainer}>
-              <Text style={styles.ingredientsText}>{data.ingredients || '-'}</Text>
+    <LinearGradient colors={["#F3F6F4", "#E8F0F8", "#F0F8FF"]} style={styles.bg}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <LinearGradient 
+            colors={["#10B981", "#059669", "#047857"]} 
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.headerCard}
+          >
+            <Text style={styles.productName}>{data.name || 'Product'}</Text>
+            <View style={styles.headerOverlay} />
+          </LinearGradient>
+          
+          <View style={styles.card}>
+            <View style={styles.row}>
+              <View style={styles.iconContainer}>
+                <Ionicons name="calendar-outline" size={24} color="#4B5563" />
+              </View>
+              <Text style={styles.label}>Packaging Date</Text>
+              <Text style={styles.value}>{data.packedOnDate || '-'}</Text>
+            </View>
+            <View style={styles.divider} />
+            
+            <View style={styles.row}>
+              <View style={styles.iconContainer}>
+                <Ionicons name="cube-outline" size={24} color="#4B5563" />
+              </View>
+              <Text style={styles.label}>Product Journey</Text>
+              <Text style={styles.value}>{data.trackingId || '-'}</Text>
+            </View>
+            <View style={styles.divider} />
+            
+            <View style={styles.row}>
+              <View style={styles.iconContainer}>
+                <Ionicons name="timer-outline" size={24} color="#4B5563" />
+              </View>
+              <Text style={styles.label}>Expiry Countdown</Text>
+              <StatusChip label={expiryStatus.label} color={expiryStatus.color} />
+            </View>
+            <View style={styles.divider} />
+            
+            <View style={styles.row}>
+              <View style={styles.iconContainer}>
+                <Ionicons name="calendar-outline" size={24} color="#4B5563" />
+              </View>
+              <Text style={styles.label}>Expiry Date</Text>
+              <Text style={styles.value}>{data.expiryDate || '-'}</Text>
+            </View>
+            <View style={styles.divider} />
+            
+            <View style={styles.row}>
+              <View style={styles.iconContainer}>
+                <Ionicons name="cash-outline" size={24} color="#4B5563" />
+              </View>
+              <Text style={styles.label}>Price</Text>
+              <Text style={styles.value}>
+                {data.price ? `₹${parseFloat(data.price).toFixed(2)}` : '-'}
+              </Text>
             </View>
           </View>
-          <View style={styles.divider} />
-          <View style={styles.row}>
-            <Ionicons name="cash-outline" size={20} color="#4B5563" />
-            <Text style={styles.label}>Price</Text>
-            <Text style={styles.value}>
-              {data.price ? `₹${parseFloat(data.price).toFixed(2)}` : '-'}
-            </Text>
+          
+          {/* Big Ingredients Box */}
+          <View style={styles.ingredientsBigBox}>
+            <View style={styles.ingredientsHeader}>
+              <View style={styles.ingredientsIconContainer}>
+                <Ionicons name="restaurant-outline" size={28} color="#10B981" />
+              </View>
+              <Text style={styles.ingredientsTitle}>Ingredients</Text>
+            </View>
+            <View style={styles.ingredientsContent}>
+              <Text style={styles.ingredientsText}>{data.ingredients || 'No ingredients information available'}</Text>
+            </View>
           </View>
+          
+          <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/home')}>
+            <LinearGradient 
+              colors={["#10B981", "#059669"]} 
+              style={styles.backButtonGradient}
+            >
+              <Ionicons name="arrow-back" size={24} color="#fff" />
+              <Text style={styles.backText}>Back to Home</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/home')}>
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-          <Text style={styles.backText}>Back to Home</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     </LinearGradient>
   );
 }
@@ -94,82 +129,119 @@ const styles = StyleSheet.create({
   bg: {
     flex: 1,
   },
-  container: {
+  scrollView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
+  },
+  container: {
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 40,
   },
   headerCard: {
     width: '100%',
-    maxWidth: 400,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    borderRadius: 28,
     alignItems: 'center',
-    paddingVertical: 28,
-    marginBottom: 0,
+    paddingVertical: 16,
+    marginBottom: 20,
     shadowColor: '#000',
-    shadowOpacity: 0.10,
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 12,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  headerIconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
     elevation: 6,
   },
+  headerOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
   productName: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
     letterSpacing: 0.5,
-    textShadowColor: 'rgba(0,0,0,0.08)',
+    textShadowColor: 'rgba(0,0,0,0.1)',
     textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 2,
+    textShadowRadius: 4,
+    textAlign: 'center',
+    paddingHorizontal: 20,
   },
   card: {
     backgroundColor: '#fff',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    padding: 24,
+    borderRadius: 28,
+    padding: 28,
     width: '100%',
-    maxWidth: 400,
     shadowColor: '#000',
-    shadowOpacity: 0.10,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 6,
-    marginBottom: 32,
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 18,
+    marginBottom: 20,
+  },
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#F8FAFC',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   label: {
     fontSize: 16,
     color: '#4B5563',
-    marginLeft: 8,
-    minWidth: 120,
     flex: 1,
+    fontWeight: '600',
   },
   value: {
     fontSize: 16,
-    color: '#222',
-    marginLeft: 8,
+    color: '#1F2937',
     flex: 1,
-    flexWrap: 'wrap',
     textAlign: 'right',
+    fontWeight: '500',
   },
   chip: {
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 4,
-    marginLeft: 8,
-    minWidth: 60,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    minWidth: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'flex-end',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   chipText: {
     color: '#fff',
@@ -179,46 +251,85 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#F3F6F4',
-    marginVertical: 2,
-    marginLeft: 32,
+    backgroundColor: '#F1F5F9',
+    marginVertical: 4,
+    marginLeft: 64,
     marginRight: 0,
   },
-  backButton: {
+  ingredientsBigBox: {
+    backgroundColor: '#fff',
+    borderRadius: 28,
+    padding: 28,
+    width: '100%',
+    shadowColor: '#000',
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
+    marginBottom: 32,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+  },
+  ingredientsHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FF6B6B',
-    paddingHorizontal: 32,
-    paddingVertical: 14,
+    marginBottom: 20,
+  },
+  ingredientsIconContainer: {
+    width: 56,
+    height: 56,
     borderRadius: 28,
-    alignSelf: 'center',
+    backgroundColor: '#F0FDF4',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
     shadowColor: '#000',
-    shadowOpacity: 0.10,
-    shadowRadius: 6,
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 4,
+    elevation: 2,
+  },
+  ingredientsTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    letterSpacing: 0.3,
+  },
+  ingredientsContent: {
+    backgroundColor: '#F8FAFC',
+    borderRadius: 20,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  ingredientsText: {
+    fontSize: 16,
+    color: '#1F2937',
+    fontWeight: '500',
+    textAlign: 'left',
+    lineHeight: 24,
+  },
+  backButton: {
+    alignSelf: 'center',
+    borderRadius: 32,
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
+  },
+  backButtonGradient: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 36,
+    paddingVertical: 16,
+    borderRadius: 32,
   },
   backText: {
     color: '#fff',
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: 12,
     letterSpacing: 0.2,
-  },
-  ingredientsContainer: {
-    flex: 1,
-    backgroundColor: '#F3F6F4',
-    borderRadius: 12,
-    padding: 12,
-    marginLeft: 8,
-    minWidth: 150,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  ingredientsText: {
-    fontSize: 14,
-    color: '#222',
-    fontWeight: 'bold',
-    textAlign: 'left',
   },
 }); 
