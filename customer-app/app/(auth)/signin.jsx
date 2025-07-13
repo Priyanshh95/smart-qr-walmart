@@ -23,7 +23,7 @@ export default function SignIn() {
   return (
     <SafeAreaView className="bg-green-900 flex-1">
       <View className="flex-1 justify-center items-center px-4">
-        <Image source={require("../../assets/images/logo.png")} className="w-20 h-20 mt-2 mb-2" />
+        <Image source={require("../../assets/images/logo.png")} className="w-60 h-60 mt-2 mb-2" />
         <Text className="text-white text-xl font-bold mb-4 text-center" style={{textShadowColor: '#000', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 2}}>NutriTrace</Text>
         <View
           className="rounded-2xl shadow p-6 w-full max-w-md"
