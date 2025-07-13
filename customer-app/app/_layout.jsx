@@ -7,6 +7,7 @@ export default function RootLayout() {
       <Stack.Screen name="index" />
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="support" />
+      <Stack.Screen name="track-product" />
     </Stack>
   );
 }

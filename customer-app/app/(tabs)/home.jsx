@@ -34,7 +34,7 @@ export default function Home() {
       title: 'Track a Product',
       gradient: ['#4ECDC4', '#6BD5F0', '#A7E6FF'],
       image: dummyImages[1],
-      onPress: () => {},
+      onPress: () => router.push('/track-product'),
     },
     {
       title: 'Ways to Recycle',
