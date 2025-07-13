@@ -8,7 +8,7 @@ export default function Index() {
     <SafeAreaView className="bg-green-900 flex-1">
       <ScrollView contentContainerStyle={{flex: 1, justifyContent: "center"}}>
         <View className="flex-1 justify-center items-center px-4">
-          <Image source={require("../assets/images/logo.png")} className="w-20 h-20 mb-4" />
+          <Image source={require("../assets/images/logo.png")} className="w-60 h-60 mb-4" />
           <View className="w-3/4">
             <Text className="text-white text-2xl font-bold mb-1 text-center">Welcome to NutriTrace</Text>
             <Text className="text-white italic mb-8 text-center">know your food better</Text>
