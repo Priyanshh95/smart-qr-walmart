@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../firebase";
@@ -57,100 +57,126 @@ export default function SignUp() {
   };
 
   return (
-    <SafeAreaView className="bg-green-900 flex-1">
-      <KeyboardAvoidingView 
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
-      >
-        <ScrollView 
-          contentContainerStyle={{ 
-            flexGrow: 1,
-            justifyContent: 'center',
-            paddingVertical: 20
-          }}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
+    <ImageBackground 
+      source={require("../../assets/images/bg-image.jpg")} 
+      className="flex-1"
+      resizeMode="cover"
+    >
+      <SafeAreaView className="flex-1 bg-black/30">
+        <KeyboardAvoidingView 
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
         >
-          <View className="flex-1 justify-center items-center px-4">
-            <Image source={require("../../assets/images/logo.png")} className="w-60 h-60 mt-2 mb-2" />
-            <Text className="text-white text-xl font-bold mb-2 text-center">NutriTrace</Text>
-            <View
-              className="rounded-2xl shadow p-6 w-full max-w-md"
-              style={{ backgroundColor: '#f0fdf4' }}
-            >
-              <Text className="text-green-900 text-2xl font-bold mb-2 text-center">Sign Up</Text>
-              <Text className="text-gray-500 mb-6 text-center">Create your account to get started.</Text>
-              <TextInput
-                className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base"
-                placeholder="Name"
-                placeholderTextColor="#6b7280"
-                value={name}
-                onChangeText={setName}
-                returnKeyType="next"
-              />
-              <TextInput
-                className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base"
-                placeholder="Email"
-                placeholderTextColor="#6b7280"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                returnKeyType="next"
-              />
-              <View className="relative">
-                <TextInput
-                  className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base pr-12"
-                  placeholder="Password"
-                  placeholderTextColor="#6b7280"
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry={!showPassword}
-                  returnKeyType="next"
-                />
-                <TouchableOpacity
-                  className="absolute right-3 top-3"
-                  onPress={() => setShowPassword(!showPassword)}
-                >
-                  <Text className="text-gray-500 text-lg">
-                    {showPassword ? "🙈" : "👁️"}
-                  </Text>
-                </TouchableOpacity>
+          <ScrollView 
+            contentContainerStyle={{ 
+              flexGrow: 1,
+              justifyContent: 'center',
+              paddingVertical: 20
+            }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <View className="flex-1 justify-center items-center px-6">
+              {/* Logo and Brand */}
+              <View className="items-center mb-6">
+                <Image source={require("../../assets/images/logo.png")} className="w-40 h-40 mb-4" />
+                <Text className="text-white text-2xl font-bold mb-2 text-center" style={{textShadowColor: '#000', textShadowOffset: {width: 0, height: 2}, textShadowRadius: 4}}>NutriTrace</Text>
+                <Text className="text-white text-sm text-center" style={{textShadowColor: '#000', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 2}}>Join the sustainable shopping revolution</Text>
               </View>
-              <View className="relative">
-                <TextInput
-                  className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base pr-12"
-                  placeholder="Confirm Password"
-                  placeholderTextColor="#6b7280"
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  secureTextEntry={!showConfirmPassword}
-                  returnKeyType="done"
-                />
-                <TouchableOpacity
-                  className="absolute right-3 top-3"
-                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  <Text className="text-gray-500 text-lg">
-                    {showConfirmPassword ? "🙈" : "👁️"}
-                  </Text>
-                </TouchableOpacity>
+
+              {/* Sign Up Form */}
+              <View className="w-full max-w-sm">
+                <View className="bg-black/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                  <Text className="text-white text-xl font-bold mb-2 text-center">Create Account</Text>
+                  <Text className="text-white text-sm mb-6 text-center opacity-90">Start your journey towards sustainable shopping</Text>
+                  
+                  <TextInput
+                    className="bg-white rounded-xl px-4 py-3 mb-4 text-base"
+                    placeholder="Full Name"
+                    placeholderTextColor="#6b7280"
+                    value={name}
+                    onChangeText={setName}
+                    returnKeyType="next"
+                  />
+                  
+                  <TextInput
+                    className="bg-white rounded-xl px-4 py-3 mb-4 text-base"
+                    placeholder="Email"
+                    placeholderTextColor="#6b7280"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                  />
+                  
+                  <View className="relative mb-4">
+                    <TextInput
+                      className="bg-white rounded-xl px-4 py-3 text-base pr-12"
+                      placeholder="Password"
+                      placeholderTextColor="#6b7280"
+                      value={password}
+                      onChangeText={setPassword}
+                      secureTextEntry={!showPassword}
+                      returnKeyType="next"
+                    />
+                    <TouchableOpacity
+                      className="absolute right-3 top-3"
+                      onPress={() => setShowPassword(!showPassword)}
+                    >
+                      <Text className="text-gray-500 text-lg">
+                        {showPassword ? "🙈" : "👁️"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  
+                  <View className="relative mb-6">
+                    <TextInput
+                      className="bg-white rounded-xl px-4 py-3 text-base pr-12"
+                      placeholder="Confirm Password"
+                      placeholderTextColor="#6b7280"
+                      value={confirmPassword}
+                      onChangeText={setConfirmPassword}
+                      secureTextEntry={!showConfirmPassword}
+                      returnKeyType="done"
+                    />
+                    <TouchableOpacity
+                      className="absolute right-3 top-3"
+                      onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      <Text className="text-gray-500 text-lg">
+                        {showConfirmPassword ? "🙈" : "👁️"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  
+                  <TouchableOpacity
+                    className="bg-green-600 rounded-xl py-3 items-center mb-4 shadow-lg"
+                    style={{ elevation: 3 }}
+                    onPress={handleSignUp}
+                  >
+                    <Text className="text-white font-bold text-lg">Create Account</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity onPress={() => router.push("/signin")} className="mb-4">
+                    <Text className="text-white text-center text-sm">
+                      Already have an account? <Text className="underline font-semibold">Sign In</Text>
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <TouchableOpacity
-                className="bg-yellow-500 rounded-lg py-3 items-center mb-2"
-                onPress={handleSignUp}
-              >
-                <Text className="text-white font-bold text-base">Sign Up</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push("/signin")}
-                className="mt-2">
-                <Text className="text-green-900 text-center">Already have an account? <Text className="underline">Sign In</Text></Text>
-              </TouchableOpacity>
+
+              {/* Eco-friendly footer */}
+              <View className="mt-6 items-center">
+                <Text className="text-white text-xs text-center opacity-90" style={{textShadowColor: '#000', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 2}}>
+                  🌍 Together we can make shopping more sustainable
+                </Text>
+              </View>
             </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 } 
