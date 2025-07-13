@@ -28,6 +28,9 @@ const TabsLayout = () => {
       <Tabs.Screen name="history" options={{ title: "History", tabBarIcon: ({ color}) => (
         <Ionicons name="time" color={color} size={24} />
       ) }} />
+      <Tabs.Screen name="marketplace" options={{ title: "Marketplace", tabBarIcon: ({ color}) => (
+        <Ionicons name="cart" color={color} size={24} />
+      ) }} />
       <Tabs.Screen name="profile" options={{ title: "Profile", tabBarIcon: ({ color}) => (
         <Ionicons name="person" color={color} size={24} />
       ) }} />
