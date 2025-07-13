@@ -60,6 +60,12 @@ export default function QRResult() {
           </View>
           <View style={styles.divider} />
           <View style={styles.row}>
+            <Ionicons name="calendar-outline" size={20} color="#4B5563" />
+            <Text style={styles.label}>Expiry Date</Text>
+            <Text style={styles.value}>{data.expiryDate || '-'}</Text>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.row}>
             <Ionicons name="restaurant-outline" size={20} color="#4B5563" />
             <Text style={styles.label}>Ingredients</Text>
             <StatusChip label={data.ingredients || '-'} color={data.ingredients === 'fruit' ? '#34D399' : '#FF6B6B'} />
