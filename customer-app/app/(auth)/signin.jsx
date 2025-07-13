@@ -1,15 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+  // Load saved credentials when component mounts
+  useEffect(() => {
+    loadSavedCredentials();
+  }, []);
+
+  // Load saved credentials from AsyncStorage
+  const loadSavedCredentials = async () => {
+    try {
+      const savedEmail = await AsyncStorage.getItem('savedEmail');
+      const savedPassword = await AsyncStorage.getItem('savedPassword');
+      
+      if (savedEmail) {
+        setEmail(savedEmail);
+      }
+      if (savedPassword) {
+        setPassword(savedPassword);
+      }
+    } catch (error) {
+      console.log('Error loading saved credentials:', error);
+    }
+  };
+
+  // Save credentials to AsyncStorage
+  const saveCredentials = async (email, password) => {
+    try {
+      await AsyncStorage.setItem('savedEmail', email);
+      await AsyncStorage.setItem('savedPassword', password);
+    } catch (error) {
+      console.log('Error saving credentials:', error);
+    }
+  };
 
   const testFirebaseConnection = () => {
     console.log("=== Firebase Connection Test ===");
@@ -24,6 +57,8 @@ export default function SignIn() {
   const handleSignIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      // Save credentials after successful login
+      await saveCredentials(email, password);
       router.replace("/(tabs)/home");
     } catch (error) {
       alert(error.message);
@@ -93,6 +128,22 @@ export default function SignIn() {
               <TouchableOpacity onPress={() => router.push("/signup")}
                 className="mt-2">
                 <Text className="text-green-900 text-center">Don't have an account? <Text className="underline">Sign Up</Text></Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                onPress={async () => {
+                  try {
+                    await AsyncStorage.removeItem('savedEmail');
+                    await AsyncStorage.removeItem('savedPassword');
+                    setEmail('');
+                    setPassword('');
+                    alert('Saved credentials cleared!');
+                  } catch (error) {
+                    console.log('Error clearing credentials:', error);
+                  }
+                }}
+                className="mt-4"
+              >
+                <Text className="text-gray-500 text-center text-sm">Clear Saved Credentials</Text>
               </TouchableOpacity>
             </View>
           </View>
