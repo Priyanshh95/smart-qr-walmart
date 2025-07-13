@@ -123,48 +123,47 @@ Keep it concise with bullet points.`;
   return (
     <View style={styles.container}>
       {/* Header */}
-      <LinearGradient
-        colors={['#45B7D1', '#5CDB95']}
-        style={styles.header}
-      >
+      <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Text style={styles.backButtonText}>← Back</Text>
+          <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Ways to Recycle</Text>
         <View style={styles.placeholder} />
-      </LinearGradient>
+      </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Search Section */}
         <View style={styles.searchSection}>
-          <Text style={styles.searchTitle}>Find Recycling Ideas</Text>
-          <Text style={styles.searchSubtitle}>
-            Enter any item to discover creative ways to recycle or repurpose it
-          </Text>
-          
-          <View style={styles.searchContainer}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="e.g., plastic bottles, old clothes, cardboard..."
-              placeholderTextColor="#999"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              multiline={false}
-            />
-            <TouchableOpacity
-              style={styles.searchButton}
-              onPress={handleSearch}
-              disabled={loading}
-            >
-              {loading ? (
-                <ActivityIndicator color="#fff" size="small" />
-              ) : (
-                <Text style={styles.searchButtonText}>Search</Text>
-              )}
-            </TouchableOpacity>
+          <View style={styles.searchCard}>
+            <Text style={styles.searchTitle}>Find Recycling Ideas</Text>
+            <Text style={styles.searchSubtitle}>
+              Enter any item to discover creative ways to recycle or repurpose it
+            </Text>
+            
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="e.g., plastic bottles, old clothes, cardboard..."
+                placeholderTextColor="#999"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                multiline={false}
+              />
+              <TouchableOpacity
+                style={styles.searchButton}
+                onPress={handleSearch}
+                disabled={loading}
+              >
+                {loading ? (
+                  <ActivityIndicator color="#fff" size="small" />
+                ) : (
+                  <Text style={styles.searchButtonText}>Search</Text>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
@@ -177,7 +176,7 @@ Keep it concise with bullet points.`;
             
             {loading ? (
               <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#45B7D1" />
+                <ActivityIndicator size="large" color="#10B981" />
                 <Text style={styles.loadingText}>Finding recycling ideas...</Text>
               </View>
             ) : recyclingSuggestions ? (
@@ -223,37 +222,44 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBF6E2',
   },
   header: {
+    paddingHorizontal: 24,
+    paddingTop: 40,
+    paddingBottom: 16,
+    backgroundColor: '#08522D',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 60,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
+    alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   backButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 25,
     fontWeight: '600',
+    textAlign: 'center',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+    paddingBottom: 10,
   },
   headerTitle: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: -0.5,
   },
   placeholder: {
-    width: 60,
+    width: 40,
   },
   content: {
     flex: 1,
@@ -261,139 +267,176 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   searchSection: {
-    marginBottom: 30,
+    marginBottom: 24,
+  },
+  searchCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 24,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#F1F3F4',
   },
   searchTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginTop: 16,
     marginBottom: 8,
+    textAlign: 'center',
   },
   searchSubtitle: {
     fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
-    lineHeight: 22,
+    color: '#6B7280',
+    textAlign: 'center',
+    lineHeight: 24,
+    marginBottom: 24,
   },
   searchContainer: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
   },
   searchInput: {
     flex: 1,
-    backgroundColor: '#fff',
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#E5E7EB',
     borderRadius: 12,
     paddingHorizontal: 16,
-    paddingVertical: 14,
     fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
+    color: '#1A1A1A',
+    backgroundColor: '#F9FAFB',
   },
   searchButton: {
-    backgroundColor: '#45B7D1',
-    borderRadius: 12,
-    paddingHorizontal: 20,
+    backgroundColor: '#10B981',
+    paddingHorizontal: 24,
     paddingVertical: 14,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 4,
+    borderRadius: 12,
+    minWidth: 80,
+    alignItems: 'center',
   },
   searchButtonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
   },
   resultsSection: {
-    marginBottom: 30,
+    marginBottom: 40,
   },
   resultsTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 16,
   },
   loadingContainer: {
     alignItems: 'center',
-    paddingVertical: 40,
-  },
-  loadingText: {
-    marginTop: 15,
-    fontSize: 16,
-    color: '#666',
-  },
-  suggestionsContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
+    paddingVertical: 50,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
     shadowColor: '#000',
     shadowOpacity: 0.08,
-    shadowRadius: 10,
+    shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
     elevation: 6,
+    borderWidth: 1,
+    borderColor: '#F1F3F4',
+  },
+  loadingText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: '#6B7280',
+    fontWeight: '500',
+  },
+  suggestionsContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#F1F3F4',
   },
   bulletPoint: {
     fontSize: 16,
-    color: '#333',
-    lineHeight: 24,
-    marginBottom: 8,
-    paddingLeft: 8,
+    color: '#1A1A1A',
+    lineHeight: 26,
+    marginBottom: 12,
+    paddingLeft: 12,
+    fontWeight: '500',
   },
   numberedPoint: {
     fontSize: 16,
-    color: '#333',
-    lineHeight: 24,
-    marginBottom: 8,
-    fontWeight: '500',
+    color: '#1A1A1A',
+    lineHeight: 26,
+    marginBottom: 12,
+    fontWeight: '600',
   },
   paragraph: {
     fontSize: 16,
-    color: '#333',
-    lineHeight: 24,
-    marginBottom: 12,
+    color: '#1A1A1A',
+    lineHeight: 26,
+    marginBottom: 16,
+    fontWeight: '400',
   },
   spacing: {
-    height: 8,
+    height: 12,
   },
   noResultsContainer: {
     alignItems: 'center',
-    paddingVertical: 40,
+    paddingVertical: 50,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#F1F3F4',
   },
   noResultsText: {
     fontSize: 16,
-    color: '#666',
+    color: '#6B7280',
     textAlign: 'center',
+    fontWeight: '500',
   },
   tipsSection: {
     marginBottom: 30,
   },
   tipsTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 16,
   },
   tipCard: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 24,
     shadowColor: '#000',
     shadowOpacity: 0.08,
-    shadowRadius: 10,
+    shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
     elevation: 6,
+    borderWidth: 1,
+    borderColor: '#F1F3F4',
   },
   tipText: {
     fontSize: 16,
-    color: '#333',
-    lineHeight: 24,
-    marginBottom: 8,
+    color: '#1A1A1A',
+    lineHeight: 26,
+    marginBottom: 12,
+    fontWeight: '500',
   },
 }); 
