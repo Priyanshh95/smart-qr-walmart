@@ -46,14 +46,11 @@ export default function WaysToRecycle() {
         return;
       }
 
-      const prompt = `Provide detailed, practical ways to recycle or repurpose "${searchQuery}". Include:
-1. Different recycling methods
-2. Creative reuse ideas
-3. Environmental benefits
-4. Step-by-step instructions where applicable
-5. Safety considerations if any
+      const prompt = `Give practical recycling ideas for "${searchQuery}". Include:
+• 2-3 recycling methods
+• 2-3 creative reuse ideas  
 
-Format the response in a clear, easy-to-read structure with bullet points and sections.`;
+Keep it concise with bullet points.`;
 
       const response = await axios.post(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
@@ -84,7 +81,7 @@ Format the response in a clear, easy-to-read structure with bullet points and se
       console.error('API Error:', error);
       console.error('Error details:', error.response?.data || error.message);
       console.error('API Key used:', apiKey ? 'Present' : 'Missing');
-      console.error('Request URL:', `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey ? 'HIDDEN' : 'MISSING'}`);
+      console.error('Request URL:', `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey ? 'HIDDEN' : 'MISSING'}`);
       
       Alert.alert(
         'Error',
