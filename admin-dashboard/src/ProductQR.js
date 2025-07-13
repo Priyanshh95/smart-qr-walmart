@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import axios from 'axios';
+import BackButton from './BackButton';
 
 const ProductQR = () => {
   const [products, setProducts] = useState([]);
@@ -59,7 +60,8 @@ const ProductQR = () => {
   }, [userEmail]);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: 20, paddingTop: 80 }}>
+      <BackButton />
       <h2>Generate QR for Products</h2>
       <input
         placeholder="Product Name"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
+import BackButton from './BackButton';
 
 const AddProduct = () => {
   const [name, setName] = useState('');
@@ -38,6 +39,7 @@ const AddProduct = () => {
 
   return (
     <div className="dashboard-container">
+      <BackButton />
       <h2>Add Product</h2>
       <input placeholder="Product Name" value={name} onChange={(e) => setName(e.target.value)} />
       <input placeholder="Ingredients" value={ingredients} onChange={(e) => setIngredients(e.target.value)} />

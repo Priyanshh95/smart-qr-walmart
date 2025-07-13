@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
+import BackButton from './BackButton';
 
 const RemoveProduct = () => {
   const [productId, setProductId] = useState('');
@@ -21,6 +22,7 @@ const RemoveProduct = () => {
 
   return (
     <div className="dashboard-container">
+      <BackButton />
       <h2>Remove Product</h2>
       <input placeholder="Product ID" value={productId} onChange={(e) => setProductId(e.target.value)} />
       <button onClick={handleRemove}>Remove</button>

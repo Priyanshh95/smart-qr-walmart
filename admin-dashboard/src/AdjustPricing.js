@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
+import BackButton from './BackButton';
 
 const AdjustPricing = () => {
   const [productId, setProductId] = useState('');
@@ -25,6 +26,7 @@ const AdjustPricing = () => {
 
   return (
     <div className="dashboard-container">
+      <BackButton />
       <h2>Adjust Product Pricing</h2>
       <input placeholder="Product ID" value={productId} onChange={(e) => setProductId(e.target.value)} />
       <input placeholder="New Price (₹)" type="number" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} />

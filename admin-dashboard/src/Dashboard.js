@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
+import BackButton from './BackButton';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <BackButton />
       <div className="dashboard-header">
         <h2>Admin Dashboard</h2>
         <button onClick={logout}>Logout</button>

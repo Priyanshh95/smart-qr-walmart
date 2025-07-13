@@ -1,0 +1,29 @@
+{
+  "userEmail": "priyanshub243@gmail.com",
+  "products": [
+    {
+      "id": 1752388254457,
+      "name": "chiku",
+      "ingredients": "fruit",
+      "price": 150,
+      "trackingId": "456",
+      "timestamp": "2025-07-13T06:30:54.457Z"
+    },
+    {
+      "id": 1752388287737,
+      "name": "dairy milk",
+      "ingredients": "milk, chocolate, flavour",
+      "price": 90,
+      "trackingId": "789",
+      "timestamp": "2025-07-13T06:31:27.737Z"
+    },
+    {
+      "id": 1752388305704,
+      "name": "tomato",
+      "ingredients": "vegetable",
+      "price": 40,
+      "trackingId": "963",
+      "timestamp": "2025-07-13T06:31:45.704Z"
+    }
+  ]
+}

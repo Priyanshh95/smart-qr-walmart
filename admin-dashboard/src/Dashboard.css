@@ -1,5 +1,6 @@
 .dashboard-container {
   padding: 40px;
+  padding-top: 80px; /* Add extra padding to account for fixed back button */
   background: #f9f9f9;
   min-height: 100vh;
 }
