@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { supabase } from './supabaseClient';
 import './Dashboard.css';
 import BackButton from './BackButton';
 import { NavigationBar } from './Dashboard';
@@ -11,13 +11,24 @@ const RemoveProduct = () => {
     if (!productId) return alert("Enter Product ID");
 
     const userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) return alert("You must be logged in.");
 
     try {
-      const res = await axios.delete(`http://localhost:5000/api/delete-product/${userEmail}/${productId}`);
-      alert("✅ " + res.data.message);
-      setProductId('');
+      const { error } = await supabase
+        .from('smart-qr')
+        .delete()
+        .match({ user_email: userEmail, product_id: productId });
+
+      if (error) {
+        console.error("❌ Delete Error:", error.message);
+        alert("❌ Failed to delete product.");
+      } else {
+        alert("✅ Product removed successfully.");
+        setProductId('');
+      }
     } catch (err) {
-      alert("❌ Failed to delete: " + (err.response?.data || err.message));
+      console.error("❌ Unexpected Error:", err.message);
+      alert("❌ Unexpected error occurred.");
     }
   };
 
@@ -27,14 +38,14 @@ const RemoveProduct = () => {
       <BackButton />
       <div className="form-container">
         <h2>Remove Product</h2>
-        
+
         <div className="form-group">
           <label>Product ID</label>
-          <input 
+          <input
             className="form-input"
-            placeholder="Enter product ID to remove" 
-            value={productId} 
-            onChange={(e) => setProductId(e.target.value)} 
+            placeholder="Enter product ID to remove"
+            value={productId}
+            onChange={(e) => setProductId(e.target.value)}
           />
         </div>
 
