@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import axios from 'axios';
 import BackButton from './BackButton';
+import './Dashboard.css';
+import { NavigationBar } from './Dashboard';
 
 const ProductQR = () => {
   const [products, setProducts] = useState([]);
@@ -60,62 +62,82 @@ const ProductQR = () => {
   }, [userEmail]);
 
   return (
-    <div style={{ padding: 20, paddingTop: 80 }}>
+    <div>
+      <NavigationBar />
       <BackButton />
-      <h2>Generate QR for Products</h2>
-      <input
-        placeholder="Product Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        style={{ marginRight: 10 }}
-      />
-      <input
-        placeholder="Ingredients"
-        value={ingredients}
-        onChange={(e) => setIngredients(e.target.value)}
-        style={{ marginRight: 10 }}
-      />
-      <input
-        placeholder="Tracking ID"
-        value={trackingId}
-        onChange={(e) => setTrackingId(e.target.value)}
-        style={{ marginRight: 10 }}
-      />
-      <input
-        type="date"
-        value={packedOnDate}
-        onChange={(e) => setPackedOnDate(e.target.value)}
-        style={{ marginRight: 10 }}
-        title="Packed On Date"
-      />
-      <input
-        type="date"
-        value={expiryDate}
-        onChange={(e) => setExpiryDate(e.target.value)}
-        style={{ marginRight: 10 }}
-        title="Expiry Date"
-      />
-      <button onClick={handleAddProduct}>Add & Generate QR</button>
+      <div className="form-container">
+        <h2>Generate QR for Products</h2>
+        
+        <div className="form-group">
+          <label>Product Name</label>
+          <input
+            className="form-input"
+            placeholder="Enter product name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-      <div style={{ marginTop: 30 }}>
-        {products.map((product) => (
-          <div
-            key={product.id}
-            style={{
-              border: '1px solid #ccc',
-              padding: 15,
-              marginBottom: 20,
-              borderRadius: 8,
-            }}
-          >
-            <h4>{product.name}</h4>
-            <p><strong>Ingredients:</strong> {product.ingredients}</p>
-            <p><strong>Tracking ID:</strong> {product.trackingId}</p>
-            <p><strong>Packed On:</strong> {product.packedOnDate}</p>
-            <p><strong>Expiry Date:</strong> {product.expiryDate}</p>
-            <QRCodeSVG value={JSON.stringify(product)} size={128} />
-          </div>
-        ))}
+        <div className="form-group">
+          <label>Ingredients</label>
+          <input
+            className="form-input"
+            placeholder="Enter ingredients"
+            value={ingredients}
+            onChange={(e) => setIngredients(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Tracking ID</label>
+          <input
+            className="form-input"
+            placeholder="Enter tracking ID"
+            value={trackingId}
+            onChange={(e) => setTrackingId(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Packed On Date</label>
+          <input
+            className="form-input"
+            type="date"
+            value={packedOnDate}
+            onChange={(e) => setPackedOnDate(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Expiry Date</label>
+          <input
+            className="form-input"
+            type="date"
+            value={expiryDate}
+            onChange={(e) => setExpiryDate(e.target.value)}
+          />
+        </div>
+
+        <button className="form-btn" onClick={handleAddProduct}>
+          Add & Generate QR
+        </button>
+      </div>
+
+      <div className="dashboard-container">
+        <div className="qr-products-grid">
+          {products.map((product) => (
+            <div key={product.id} className="qr-product-card">
+              <h4>{product.name}</h4>
+              <p><strong>Ingredients:</strong> {product.ingredients}</p>
+              <p><strong>Tracking ID:</strong> {product.trackingId}</p>
+              <p><strong>Packed On:</strong> {product.packedOnDate}</p>
+              <p><strong>Expiry Date:</strong> {product.expiryDate}</p>
+              <div className="qr-code-container">
+                <QRCodeSVG value={JSON.stringify(product)} size={128} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

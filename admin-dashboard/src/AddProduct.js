@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
 import BackButton from './BackButton';
+import { NavigationBar } from './Dashboard';
 
 const AddProduct = () => {
   const [name, setName] = useState('');
@@ -38,14 +39,57 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div>
+      <NavigationBar />
       <BackButton />
-      <h2>Add Product</h2>
-      <input placeholder="Product Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input placeholder="Ingredients" value={ingredients} onChange={(e) => setIngredients(e.target.value)} />
-      <input placeholder="Tracking ID" value={trackingId} onChange={(e) => setTrackingId(e.target.value)} />
-      <input placeholder="Price (₹)" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-      <button onClick={handleAdd}>Add Product</button>
+      <div className="form-container">
+        <h2>Add Product</h2>
+        
+        <div className="form-group">
+          <label>Product Name</label>
+          <input 
+            className="form-input"
+            placeholder="Enter product name" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Ingredients</label>
+          <input 
+            className="form-input"
+            placeholder="Enter ingredients" 
+            value={ingredients} 
+            onChange={(e) => setIngredients(e.target.value)} 
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Tracking ID</label>
+          <input 
+            className="form-input"
+            placeholder="Enter tracking ID" 
+            value={trackingId} 
+            onChange={(e) => setTrackingId(e.target.value)} 
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Price (₹)</label>
+          <input 
+            className="form-input"
+            placeholder="Enter price" 
+            type="number" 
+            value={price} 
+            onChange={(e) => setPrice(e.target.value)} 
+          />
+        </div>
+
+        <button className="form-btn" onClick={handleAdd}>
+          Add Product
+        </button>
+      </div>
     </div>
   );
 };

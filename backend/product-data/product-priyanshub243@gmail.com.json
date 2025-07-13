@@ -24,6 +24,14 @@
       "price": 40,
       "trackingId": "963",
       "timestamp": "2025-07-13T06:31:45.704Z"
+    },
+    {
+      "id": 1752390201161,
+      "name": "mango",
+      "ingredients": "fruite",
+      "price": 500,
+      "trackingId": "852",
+      "timestamp": "2025-07-13T07:03:21.161Z"
     }
   ]
 }
