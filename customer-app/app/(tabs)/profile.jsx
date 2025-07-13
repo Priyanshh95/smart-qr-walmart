@@ -84,7 +84,6 @@ const Profile = () => {
     >
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
-        <Text style={styles.headerSubtitle}>Settings</Text>
       </View>
       <ScrollView contentContainerStyle={styles.centralizedScroll} keyboardShouldPersistTaps="handled">
         <View style={styles.headerContainer}>
