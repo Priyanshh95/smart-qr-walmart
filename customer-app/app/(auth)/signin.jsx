@@ -8,6 +8,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleSignIn = async () => {
@@ -39,14 +40,24 @@ export default function SignIn() {
             keyboardType="email-address"
             autoCapitalize="none"
           />
-          <TextInput
-            className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base"
-            placeholder="Password"
-            placeholderTextColor="#6b7280"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <View className="relative">
+            <TextInput
+              className="bg-gray-100 rounded-lg px-4 py-3 mb-4 text-base pr-12"
+              placeholder="Password"
+              placeholderTextColor="#6b7280"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity
+              className="absolute right-3 top-3"
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <Text className="text-gray-500 text-lg">
+                {showPassword ? "🙈" : "👁️"}
+              </Text>
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
             className="bg-yellow-500 rounded-lg py-3 items-center mb-2"
             onPress={handleSignIn}
