@@ -68,7 +68,17 @@ export default function QRResult() {
           <View style={styles.row}>
             <Ionicons name="restaurant-outline" size={20} color="#4B5563" />
             <Text style={styles.label}>Ingredients</Text>
-            <StatusChip label={data.ingredients || '-'} color={data.ingredients === 'fruit' ? '#34D399' : '#FF6B6B'} />
+            <View style={styles.ingredientsContainer}>
+              <Text style={styles.ingredientsText}>{data.ingredients || '-'}</Text>
+            </View>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.row}>
+            <Ionicons name="cash-outline" size={20} color="#4B5563" />
+            <Text style={styles.label}>Price</Text>
+            <Text style={styles.value}>
+              {data.price ? `₹${parseFloat(data.price).toFixed(2)}` : '-'}
+            </Text>
           </View>
         </View>
         <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/(tabs)/home')}>
@@ -194,5 +204,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
     letterSpacing: 0.2,
+  },
+  ingredientsContainer: {
+    flex: 1,
+    backgroundColor: '#F3F6F4',
+    borderRadius: 12,
+    padding: 12,
+    marginLeft: 8,
+    minWidth: 150,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  ingredientsText: {
+    fontSize: 14,
+    color: '#222',
+    fontWeight: 'bold',
+    textAlign: 'left',
   },
 }); 

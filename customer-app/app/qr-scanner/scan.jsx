@@ -54,8 +54,7 @@ export default function QRUpload() {
           data[0].symbol[0].data
         ) {
           const qrData = data[0].symbol[0].data;
-          setQrResult(qrData);
-          Alert.alert('QR Code Found', qrData);
+          
           // Save to Firestore
           if (auth.currentUser) {
             await addDoc(
@@ -66,13 +65,23 @@ export default function QRUpload() {
               }
             );
           }
-          // If QR data is JSON, navigate to result page
+          
+          // Try to parse as JSON and navigate to result page
           try {
             const parsed = JSON.parse(qrData);
-            router.push({ pathname: '/qr-scanner/result', params: { data: JSON.stringify(parsed) } });
-            return;
+            // Check if it has the expected structure
+            if (parsed && (parsed.name || parsed.productId)) {
+              router.push({ pathname: '/qr-scanner/result', params: { data: JSON.stringify(parsed) } });
+              return;
+            } else {
+              // Invalid JSON structure, show error
+              setQrResult('Invalid QR code format. Please scan a valid product QR code.');
+              Alert.alert('Invalid QR Code', 'This QR code does not contain valid product information.');
+            }
           } catch (e) {
-            // Not JSON, just show as text
+            // Not JSON, show error
+            setQrResult('Invalid QR code format. Please scan a valid product QR code.');
+            Alert.alert('Invalid QR Code', 'This QR code does not contain valid product information.');
           }
         } else {
           setQrResult('No QR code found in the image.');
