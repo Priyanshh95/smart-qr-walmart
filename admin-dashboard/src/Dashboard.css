@@ -50,6 +50,7 @@ body {
 
 /* Main dashboard container */
 .dashboard-container {
+  position: relative;
   padding: 40px 30px;
   max-width: 1200px;
   margin: 0 auto;
@@ -231,22 +232,4 @@ body {
   border-radius: 6px;
 }
 
-.back-button {
-  position: fixed;
-  top: 100px;
-  left: 20px;
-  background-color: #000000;
-  color: #ffffff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 500;
-  z-index: 1000;
-  transition: background-color 0.2s ease;
-}
-
-.back-button:hover {
-  background-color: #333333;
-}
+/* Back button styles are now in BackButton.css */

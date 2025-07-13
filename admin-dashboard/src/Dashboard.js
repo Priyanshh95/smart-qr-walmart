@@ -35,7 +35,6 @@ const Dashboard = () => {
       
       {/* Main Dashboard Content */}
       <div className="dashboard-container">
-        <BackButton />
         
         <div className="dashboard-header">
           <h2>Admin Dashboard</h2>
