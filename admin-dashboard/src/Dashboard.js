@@ -17,7 +17,7 @@ const NavigationBar = () => {
 
   return (
     <div className="nav-bar">
-      <h1>Smart QR Admin</h1>
+      <h1>NutriTrace</h1>
       <div className="nav-buttons">
         <button className="nav-btn" onClick={goHome}>Home</button>
         <button className="nav-btn" onClick={logout}>Logout</button>

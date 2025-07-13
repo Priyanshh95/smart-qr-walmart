@@ -23,8 +23,9 @@ body {
 
 .nav-bar h1 {
   color: white;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 28px;
+  font-weight: 600;
+  margin-left: 24px;
 }
 
 .nav-buttons {
