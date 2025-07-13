@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import { supabase } from '../../src/supabaseClient';
+import { supabase } from '../../src/supabaseClient'; // <-- Fix import path
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Marketplace() {
@@ -33,9 +33,13 @@ export default function Marketplace() {
     fetchProducts();
   }, []);
 
+  const handleBuy = (product) => {
+    Alert.alert('Buy', `You have selected to buy: ${product.name}`);
+  };
+
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#10B981", "#059669"]} style={styles.header}>
+      <LinearGradient colors={["#08522D", "#059669"]} style={styles.header}>
         <Text style={styles.headerTitle}>Marketplace</Text>
       </LinearGradient>
       <ScrollView contentContainerStyle={styles.listContainer}>
@@ -47,9 +51,19 @@ export default function Marketplace() {
           <Text style={styles.emptyText}>No products found.</Text>
         ) : (
           products.map((product, idx) => (
-            <View key={idx} style={styles.productRow}>
-              <Text style={styles.productName}>{product.name}</Text>
-              <Text style={styles.productPrice}>₹{product.price}</Text>
+            <View key={idx}>
+              <View style={styles.productRow}>
+                <View style={styles.productInfoColumn}>
+                  <Text style={styles.productName}>{product.name}</Text>
+                  <Text style={styles.productPrice}>₹{product.price}</Text>
+                </View>
+                <TouchableOpacity style={styles.buyButton} onPress={() => handleBuy(product)}>
+                  <LinearGradient colors={["#08522D", "#10B981"]} style={styles.buyButtonGradient}>
+                    <Text style={styles.buyButtonText}>Buy</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+              {idx !== products.length - 1 && <View style={styles.divider} />}
             </View>
           ))
         )}
@@ -92,29 +106,61 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 16,
-    paddingVertical: 18,
-    paddingHorizontal: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 24,
+    marginBottom: 0,
+    shadowColor: '#10B981',
+    shadowOpacity: 0.10,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
     borderWidth: 1,
-    borderColor: '#F1F3F4',
+    borderColor: '#BBF7D0',
+  },
+  productInfoColumn: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   productName: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 19,
+    fontWeight: '700',
     color: '#059669',
-    flex: 1,
+    marginBottom: 4,
   },
   productPrice: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 17,
+    fontWeight: '600',
     color: '#222',
-    marginLeft: 16,
+    opacity: 0.85,
+  },
+  buyButton: {
+    marginLeft: 24,
+    borderRadius: 16,
+    overflow: 'hidden',
+    elevation: 2,
+    alignSelf: 'center',
+  },
+  buyButtonGradient: {
+    paddingHorizontal: 32,
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buyButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 17,
+    letterSpacing: 0.2,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#E0E7EF',
+    marginHorizontal: 10,
+    marginBottom: 18,
+    marginTop: 0,
   },
   errorText: {
     color: '#EF4444',
