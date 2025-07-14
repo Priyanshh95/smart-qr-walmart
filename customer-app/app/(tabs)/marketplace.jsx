@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { supabase } from '../../src/supabaseClient'; // <-- Fix import path
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Marketplace() {
+export default function ProductList() {
   const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,14 +33,10 @@ export default function Marketplace() {
     fetchProducts();
   }, []);
 
-  const handleBuy = (product) => {
-    Alert.alert('Buy', `You have selected to buy: ${product.name}`);
-  };
-
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#08522D", "#059669"]} style={styles.header}>
-        <Text style={styles.headerTitle}>Marketplace</Text>
+        <Text style={styles.headerTitle}>ProductList</Text>
       </LinearGradient>
       <ScrollView contentContainerStyle={styles.listContainer}>
         {loading ? (
@@ -57,11 +53,6 @@ export default function Marketplace() {
                   <Text style={styles.productName}>{product.name}</Text>
                   <Text style={styles.productPrice}>₹{product.price}</Text>
                 </View>
-                <TouchableOpacity style={styles.buyButton} onPress={() => handleBuy(product)}>
-                  <LinearGradient colors={["#08522D", "#10B981"]} style={styles.buyButtonGradient}>
-                    <Text style={styles.buyButtonText}>Buy</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
               </View>
               {idx !== products.length - 1 && <View style={styles.divider} />}
             </View>
@@ -134,26 +125,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222',
     opacity: 0.85,
-  },
-  buyButton: {
-    marginLeft: 24,
-    borderRadius: 16,
-    overflow: 'hidden',
-    elevation: 2,
-    alignSelf: 'center',
-  },
-  buyButtonGradient: {
-    paddingHorizontal: 32,
-    paddingVertical: 16,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buyButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 17,
-    letterSpacing: 0.2,
   },
   divider: {
     height: 1,
