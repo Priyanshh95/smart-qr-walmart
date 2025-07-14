@@ -210,7 +210,7 @@ Keep it concise with bullet points.`;
             <View style={styles.searchContainer}>
               <TextInput
                 style={styles.searchInput}
-                placeholder="e.g., plastic bottles, old clothes, cardboard..."
+                placeholder="e.g., plastic etc"
                 placeholderTextColor="#999"
                 value={searchQuery}
                 onChangeText={setSearchQuery}

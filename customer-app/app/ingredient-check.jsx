@@ -166,7 +166,7 @@ export default function IngredientCheck() {
       {/* Gemini Result */}
       {geminiResult[product.id] && (
         <View style={styles.geminiResultBlock}>
-          <Text style={styles.geminiResultTitle}>Gemini Analysis</Text>
+          <Text style={styles.geminiResultTitle}>Ingredient Analysis</Text>
           {geminiResult[product.id].split('\n').map((line, idx) => (
             <Text key={idx} style={styles.geminiResultText}>{formatMarkdownText(line)}</Text>
           ))}
