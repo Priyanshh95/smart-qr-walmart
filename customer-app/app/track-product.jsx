@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView 
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { supabase } from '../src/supabaseClient';
 
 const TrackProduct = () => {
   const router = useRouter();
@@ -17,24 +18,26 @@ const TrackProduct = () => {
     }
 
     setLoading(true);
-    
-    // Simulate API call to track product
-    setTimeout(() => {
+
+    try {
+      const { data, error } = await supabase
+        .from('smart-qr')
+        .select('*')
+        .eq('trackingId', trackingId)
+        .single();
+
+      if (error || !data) {
+        setTrackedProduct(null);
+        Alert.alert('Not Found', 'No product found with this tracking ID.');
+      } else {
+        setTrackedProduct(data);
+      }
+    } catch (err) {
+      setTrackedProduct(null);
+      Alert.alert('Error', 'Failed to fetch product.');
+    } finally {
       setLoading(false);
-      
-      // Mock product data - in real app, this would come from API
-      const mockProduct = {
-        name: 'Organic Apples',
-        trackingId: trackingId,
-        packedOnDate: '2024-01-15',
-        expiryDate: '2024-02-15',
-        status: 'In Transit',
-        location: 'Distribution Center',
-        estimatedDelivery: '2024-01-20'
-      };
-      
-      setTrackedProduct(mockProduct);
-    }, 2000);
+    }
   };
 
   const getStatusColor = (status) => {
