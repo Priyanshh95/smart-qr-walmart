@@ -30,7 +30,12 @@ const TrackProduct = () => {
         setTrackedProduct(null);
         Alert.alert('Not Found', 'No product found with this tracking ID.');
       } else {
-        setTrackedProduct(data);
+        setTrackedProduct({
+          ...data,
+          status: 'In Transit', // mock status
+          location: 'Distribution Center', // mock location
+          estimatedDelivery: '2024-01-20', // mock estimated delivery
+        });
       }
     } catch (err) {
       setTrackedProduct(null);
