@@ -1,6 +1,6 @@
-# Smart QR Walmart
+# NutriTrace for Walmart
 
-Smart QR Walmart is a smart and efficient solution aimed at enhancing the shopping experience by integrating QR-based systems into a Walmart-like retail environment. The project consists of three key modules:
+NutriTrace is a smart and efficient solution aimed at enhancing the shopping experience by integrating QR-based systems into a Walmart-like retail environment. The project consists of three key modules:
 
 * 🛍️ **Customer App** – Built with React Native for customers to scan products, view details, and manage purchases.  
 * 🧑‍💼 **Admin Dashboard** – A web interface for managing products, inventory, and QR generation.  
