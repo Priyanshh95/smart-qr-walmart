@@ -21,7 +21,7 @@ smart-qr-walmart/
 ## 🚀 How to Run the Project
 
 ### 1. Clone the Repository
-git clone https://github.com/satyamrathirar/smart-qr-walmart.git  
+git clone https://github.com/satyamrathirar/NutriTrace.git  
 cd smart-qr-walmart
 
 ---
